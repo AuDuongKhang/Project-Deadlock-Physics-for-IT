@@ -1,0 +1,1253 @@
+[
+    {
+        "id": "e0683159ab6f5efc",
+        "type": "tab",
+        "label": "Đồ án",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "ccc8697f5cd60945",
+        "type": "ui_switch",
+        "z": "e0683159ab6f5efc",
+        "name": "",
+        "label": "Mở/Khóa cửa",
+        "tooltip": "",
+        "group": "ebdead8f9b55521d",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "Mở/Khóa cửa",
+        "topicType": "str",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 180,
+        "y": 80,
+        "wires": [
+            [
+                "a38f0790a846f865"
+            ]
+        ]
+    },
+    {
+        "id": "de50cac351f9cad8",
+        "type": "ui_switch",
+        "z": "e0683159ab6f5efc",
+        "name": "",
+        "label": "Bật/tắt buzzer",
+        "tooltip": "",
+        "group": "ebdead8f9b55521d",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "Bật/tắt buzzer",
+        "topicType": "str",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 180,
+        "y": 240,
+        "wires": [
+            [
+                "f68b604d8a7b288f"
+            ]
+        ]
+    },
+    {
+        "id": "ba1ae2cd48994455",
+        "type": "ui_text",
+        "z": "e0683159ab6f5efc",
+        "group": "bc3cd7053667dade",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Trạng thái cửa:",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 1020,
+        "y": 660,
+        "wires": []
+    },
+    {
+        "id": "e3c8b4f5efc91752",
+        "type": "ui_text",
+        "z": "e0683159ab6f5efc",
+        "group": "bc3cd7053667dade",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Trạng thái buzzer:",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 1010,
+        "y": 740,
+        "wires": []
+    },
+    {
+        "id": "cf32ee632189832f",
+        "type": "ui_text",
+        "z": "e0683159ab6f5efc",
+        "group": "bc3cd7053667dade",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Trạng thái cảm biến khoảng cách:",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#000000",
+        "x": 1020,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "676e319f242ffa71",
+        "type": "mqtt out",
+        "z": "e0683159ab6f5efc",
+        "name": "",
+        "topic": "nhom9/door",
+        "qos": "2",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "f3ad3a6e3aeb3ac4",
+        "x": 870,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "a38f0790a846f865",
+        "type": "function",
+        "z": "e0683159ab6f5efc",
+        "name": "switch on open the door",
+        "func": "var switch1 = context.get('switch1') || 0;\nvar topic = msg.topic;\nif (topic === 'Mở/Khóa cửa')\n{\n    switch1 = msg.payload;\n}\nnode.log(\"switch1 = \" + switch1);\nif (switch1)\n    msg.payload = true;\ncontext.set('switch1',switch1);\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 550,
+        "y": 140,
+        "wires": [
+            [
+                "6233e1c24e4c8d69",
+                "676e319f242ffa71"
+            ]
+        ]
+    },
+    {
+        "id": "f68b604d8a7b288f",
+        "type": "function",
+        "z": "e0683159ab6f5efc",
+        "name": "switch on buzzer",
+        "func": "var switch1 = context.get('switch1') || 0;\nvar topic = msg.topic;\nif (topic === 'Bật/tắt buzzer') {\n    switch1 = msg.payload;\n}\nnode.log(\"switch1 = \" + switch1);\nif (switch1)\n    msg.payload = true;\ncontext.set('switch1', switch1);\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 530,
+        "y": 260,
+        "wires": [
+            [
+                "055cdc79d8eec5dc",
+                "7fec8faa8c3591a7"
+            ]
+        ]
+    },
+    {
+        "id": "6233e1c24e4c8d69",
+        "type": "debug",
+        "z": "e0683159ab6f5efc",
+        "name": "debug 7",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 800,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "055cdc79d8eec5dc",
+        "type": "debug",
+        "z": "e0683159ab6f5efc",
+        "name": "debug 8",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 880,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "7fec8faa8c3591a7",
+        "type": "mqtt out",
+        "z": "e0683159ab6f5efc",
+        "name": "",
+        "topic": "nhom9/buzzer",
+        "qos": "2",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "f3ad3a6e3aeb3ac4",
+        "x": 880,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "f99d27eceb2c75cf",
+        "type": "mqtt in",
+        "z": "e0683159ab6f5efc",
+        "name": "",
+        "topic": "nhom9/buzzer",
+        "qos": "2",
+        "datatype": "utf8",
+        "broker": "f63805fac32c6399",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 390,
+        "y": 740,
+        "wires": [
+            [
+                "1b259bb6b9f22c0d"
+            ]
+        ]
+    },
+    {
+        "id": "b480ec4708faffa4",
+        "type": "mqtt in",
+        "z": "e0683159ab6f5efc",
+        "name": "",
+        "topic": "nhom9/door",
+        "qos": "2",
+        "datatype": "utf8",
+        "broker": "f63805fac32c6399",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 370,
+        "y": 660,
+        "wires": [
+            [
+                "0620d4eb51430b91"
+            ]
+        ]
+    },
+    {
+        "id": "d4fc36ba1310894b",
+        "type": "ui_form",
+        "z": "e0683159ab6f5efc",
+        "name": "Dashboard Sign-In",
+        "label": "",
+        "group": "f0f8157ed2a59617",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "options": [
+            {
+                "label": "username",
+                "value": "username",
+                "type": "text",
+                "required": true,
+                "rows": null
+            },
+            {
+                "label": "password",
+                "value": "password",
+                "type": "password",
+                "required": true,
+                "rows": null
+            }
+        ],
+        "formValue": {
+            "username": "",
+            "password": ""
+        },
+        "payload": "",
+        "submit": "submit",
+        "cancel": "cancel",
+        "topic": "",
+        "topicType": "str",
+        "splitLayout": false,
+        "className": "",
+        "x": 190,
+        "y": 940,
+        "wires": [
+            [
+                "08ca9ca95fd9460d",
+                "f63324eccba2d9a4",
+                "8247fd7bfd377275"
+            ]
+        ]
+    },
+    {
+        "id": "50575b11a0621686",
+        "type": "debug",
+        "z": "e0683159ab6f5efc",
+        "name": "Debug Account Log ",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 760,
+        "y": 880,
+        "wires": []
+    },
+    {
+        "id": "0d2dd3918fc83428",
+        "type": "comment",
+        "z": "e0683159ab6f5efc",
+        "name": "Sign-In Section",
+        "info": "",
+        "x": 180,
+        "y": 880,
+        "wires": []
+    },
+    {
+        "id": "08ca9ca95fd9460d",
+        "type": "function",
+        "z": "e0683159ab6f5efc",
+        "name": "Account Log",
+        "func": "var accountlog =  flow.get(\"accountlog\") || [] ; \n\naccountlog.push({ accessAt : new Date(), username : msg.payload.username})\n\nflow.set(\"accountlog\", accountlog);\n\nmsg.payload = accountlog;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 389.00000762939453,
+        "y": 909.9999961853027,
+        "wires": [
+            [
+                "50575b11a0621686"
+            ]
+        ]
+    },
+    {
+        "id": "8247fd7bfd377275",
+        "type": "function",
+        "z": "e0683159ab6f5efc",
+        "name": "Account Verification",
+        "func": "var accounts = flow.get(\"accounts\") ||\n  [{ username: \"admin\", password: \"admin\" }, { username: \"guest\", password: \"guest\" }];\n\nvar username = msg.payload.username;\nvar password = msg.payload.password;\n\nmsg.payload = 1;\n\naccounts.forEach(function (account) {\n  if (account.username == username) {\n    msg.payload = 2;\n    if (account.password == password) {\n      msg.payload = 0;\n    }\n  }\n});\n\nif (msg.payload == 0) {\n  var currentsocketid = flow.get(\"clientid\") || undefined;\n  if (currentsocketid !== undefined && currentsocketid !== msg.socketid) \n    msg.payload = 3;\n}\n// keep the original socketid from msg.socketid;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 460,
+        "y": 960,
+        "wires": [
+            [
+                "98e3ad471382fc42"
+            ]
+        ]
+    },
+    {
+        "id": "98e3ad471382fc42",
+        "type": "switch",
+        "z": "e0683159ab6f5efc",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "0",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "1",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "2",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "3",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 4,
+        "x": 690,
+        "y": 980,
+        "wires": [
+            [
+                "d6a3930043f50aef"
+            ],
+            [
+                "16e102104248c02a"
+            ],
+            [
+                "0fc8e61f33a7703f"
+            ],
+            [
+                "8e7019bcca210e2f"
+            ]
+        ]
+    },
+    {
+        "id": "d6a3930043f50aef",
+        "type": "function",
+        "z": "e0683159ab6f5efc",
+        "name": "= 0 : Success",
+        "func": "/* activate session timer */\nvar sessionTimer =  flow.get(\"sessionTimer\") || 0; \nvar currTime = Date.now();\nflow.set(\"sessionTimer\", currTime);\nflow.set(\"clientid\", msg.socketid);\n/* ui-control payload */\nmsg.payload = { \"tab\": \"Smart door\" };\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 940,
+        "y": 920,
+        "wires": [
+            [
+                "5b3e4a6e47f020e1"
+            ]
+        ]
+    },
+    {
+        "id": "16e102104248c02a",
+        "type": "function",
+        "z": "e0683159ab6f5efc",
+        "name": "= 1 : Unknown User",
+        "func": "msg.payload = \"Username Doesn't exist!!!\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 940,
+        "y": 960,
+        "wires": [
+            [
+                "8db8689075307108"
+            ]
+        ]
+    },
+    {
+        "id": "0fc8e61f33a7703f",
+        "type": "function",
+        "z": "e0683159ab6f5efc",
+        "name": "= 2 : Wrong Password",
+        "func": "msg.payload = \"Invalid Password\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 940,
+        "y": 1000,
+        "wires": [
+            [
+                "8db8689075307108"
+            ]
+        ]
+    },
+    {
+        "id": "5b3e4a6e47f020e1",
+        "type": "ui_ui_control",
+        "z": "e0683159ab6f5efc",
+        "name": "Go to Smart door",
+        "x": 1150,
+        "y": 920,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "8db8689075307108",
+        "type": "ui_toast",
+        "z": "e0683159ab6f5efc",
+        "position": "dialog",
+        "displayTime": "3",
+        "highlight": "",
+        "sendall": true,
+        "outputs": 1,
+        "ok": "OK",
+        "cancel": "",
+        "raw": false,
+        "className": "",
+        "topic": "Authentication Failed",
+        "name": "Authentication Failure Dialog",
+        "x": 1200,
+        "y": 980,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "9c11c96142fadcf7",
+        "type": "comment",
+        "z": "e0683159ab6f5efc",
+        "name": "Session Management - 150 secs for this demo",
+        "info": "",
+        "x": 279.5,
+        "y": 1099.0000076293945,
+        "wires": []
+    },
+    {
+        "id": "a33cda24fee0c986",
+        "type": "inject",
+        "z": "e0683159ab6f5efc",
+        "name": "Timer",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "3",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 178.00000762939453,
+        "y": 1187.9999923706055,
+        "wires": [
+            [
+                "a46bef3c59b2b32d",
+                "f27ac53085035c50"
+            ]
+        ]
+    },
+    {
+        "id": "a46bef3c59b2b32d",
+        "type": "function",
+        "z": "e0683159ab6f5efc",
+        "name": "Detect Session Timer",
+        "func": "var sessionTimer =  flow.get(\"sessionTimer\") || 0; \nvar currTime = Date.now();\nvar SESSION_TIMEOUT = 150000; //1500 secs\n\nif ( sessionTimer === 0 /* Inactive, No user signed in */ ) {\n    msg.payload = 2;\n} else {\n    if ( currTime - sessionTimer > SESSION_TIMEOUT ) {\n      msg.payload = 0;  \n    } else {\n      msg.payload = 1;        \n    }\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 366.00003814697266,
+        "y": 1154.0000076293945,
+        "wires": [
+            [
+                "9ab451a82d0e80d6"
+            ]
+        ]
+    },
+    {
+        "id": "9ab451a82d0e80d6",
+        "type": "switch",
+        "z": "e0683159ab6f5efc",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "0",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "1",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "2",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 3,
+        "x": 536.000072479248,
+        "y": 1152.0000076293945,
+        "wires": [
+            [
+                "f5154529ba3a8003"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "f5154529ba3a8003",
+        "type": "function",
+        "z": "e0683159ab6f5efc",
+        "name": "Time-Out",
+        "func": "/* activate session timer */\nvar sessionTimer =  flow.get(\"sessionTimer\") || 0; \nflow.set(\"sessionTimer\", 0);\n\nmsg.socketid = flow.get(\"clientid\") || undefined;\nmsg.payload = \"Session Expired! Please log in again!\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 691.9999847412109,
+        "y": 1125.0000114440918,
+        "wires": [
+            [
+                "fc4f299d6c16c416",
+                "eed2d97c24d5a1b3"
+            ]
+        ]
+    },
+    {
+        "id": "fc4f299d6c16c416",
+        "type": "ui_toast",
+        "z": "e0683159ab6f5efc",
+        "position": "dialog",
+        "displayTime": "3",
+        "highlight": "",
+        "sendall": true,
+        "outputs": 1,
+        "ok": "OK",
+        "cancel": "",
+        "raw": false,
+        "className": "",
+        "topic": "Session Timeout",
+        "name": "Time-Out Dialog",
+        "x": 879.500114440918,
+        "y": 1091.0000114440918,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "50c92d352fdb00cd",
+        "type": "ui_ui_control",
+        "z": "e0683159ab6f5efc",
+        "name": "Go to Signin Group",
+        "x": 1090,
+        "y": 1120,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "eed2d97c24d5a1b3",
+        "type": "function",
+        "z": "e0683159ab6f5efc",
+        "name": "Log-In Redirection",
+        "func": "var msg = {};\n\nmsg.socketid = flow.get(\"clientid\") || undefined;\nmsg.payload = { \"tab\": \"LoginPage\" };\n\nflow.set(\"clientid\", undefined);\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 890.0000228881836,
+        "y": 1128.0000076293945,
+        "wires": [
+            [
+                "50c92d352fdb00cd"
+            ]
+        ]
+    },
+    {
+        "id": "1686aeb45fa0f964",
+        "type": "ui_toast",
+        "z": "e0683159ab6f5efc",
+        "position": "bottom right",
+        "displayTime": "1",
+        "highlight": "",
+        "sendall": true,
+        "outputs": 0,
+        "ok": "OK",
+        "cancel": "",
+        "raw": false,
+        "className": "",
+        "topic": "Timer",
+        "name": "Display Remaining Time",
+        "x": 699.7222023010254,
+        "y": 1241.9999923706055,
+        "wires": []
+    },
+    {
+        "id": "f27ac53085035c50",
+        "type": "function",
+        "z": "e0683159ab6f5efc",
+        "name": "Calculating Remaining Time (Debug)",
+        "func": "var sessionTimer =  flow.get(\"sessionTimer\") || 0; \nvar currTime = Date.now();\nvar remainingSecs = Math.floor((150000 - (currTime - sessionTimer))/1000) + 1;\n    \nif ( sessionTimer == 0 /* Inactive, No user signed in */ ) {\n    return null;\n} else {\n    \n    if ( remainingSecs <= 7 ) msg.payload = \"Remaining : \" + remainingSecs + \" secs\";  \n    else return null;\n}\n\nmsg.socketid = flow.get(\"clientid\") || \"B1234\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 416.0000305175781,
+        "y": 1242.0000200271606,
+        "wires": [
+            [
+                "1686aeb45fa0f964"
+            ]
+        ]
+    },
+    {
+        "id": "f63324eccba2d9a4",
+        "type": "debug",
+        "z": "e0683159ab6f5efc",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "x": 371.5000419616699,
+        "y": 1020.5347557067871,
+        "wires": []
+    },
+    {
+        "id": "76c06305cdb4c9ac",
+        "type": "ui_toast",
+        "z": "e0683159ab6f5efc",
+        "position": "dialog",
+        "displayTime": "3",
+        "highlight": "",
+        "sendall": true,
+        "outputs": 1,
+        "ok": "OK",
+        "cancel": "",
+        "raw": false,
+        "className": "",
+        "topic": "System In Use.",
+        "name": "System In-Use Dialog",
+        "x": 1180,
+        "y": 1060,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "8e7019bcca210e2f",
+        "type": "function",
+        "z": "e0683159ab6f5efc",
+        "name": "= 3 : System In Use",
+        "func": "msg.payload = \"System is used by other user.\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 930,
+        "y": 1040,
+        "wires": [
+            [
+                "76c06305cdb4c9ac"
+            ]
+        ]
+    },
+    {
+        "id": "1b259bb6b9f22c0d",
+        "type": "function",
+        "z": "e0683159ab6f5efc",
+        "name": "function 7",
+        "func": "if (msg.payload === \"true\" || msg.payload === \"false\")\n{\n    msg.payload = \"Waiting...\";\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 680,
+        "y": 740,
+        "wires": [
+            [
+                "e3c8b4f5efc91752"
+            ]
+        ]
+    },
+    {
+        "id": "0620d4eb51430b91",
+        "type": "function",
+        "z": "e0683159ab6f5efc",
+        "name": "function 8",
+        "func": "if (msg.payload === \"true\" || msg.payload === \"false\")\n{\n    msg.payload = \"Waiting...\";\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 680,
+        "y": 660,
+        "wires": [
+            [
+                "ba1ae2cd48994455"
+            ]
+        ]
+    },
+    {
+        "id": "52932521c4e53d7e",
+        "type": "comment",
+        "z": "e0683159ab6f5efc",
+        "name": "Main section",
+        "info": "",
+        "x": 170,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "7e8eff445f7488b7",
+        "type": "comment",
+        "z": "e0683159ab6f5efc",
+        "name": "Cloud",
+        "info": "",
+        "x": 150,
+        "y": 1340,
+        "wires": []
+    },
+    {
+        "id": "211c1822e7c0e9ae",
+        "type": "comment",
+        "z": "e0683159ab6f5efc",
+        "name": "MQTT",
+        "info": "",
+        "x": 150,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "c47bfadb52dc55c1",
+        "type": "debug",
+        "z": "e0683159ab6f5efc",
+        "name": "debug 12",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 740,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "80ce7efbdcf6aae3",
+        "type": "ui_template",
+        "z": "e0683159ab6f5efc",
+        "group": "2a745e6b.07df92",
+        "name": "Dashboard Theme : Modern Dark",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "format": "<!DOCTYPE html>\n<html>\n\n<head>\n    <link href=\"https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;700&display=swap\" rel=\"stylesheet\">\n    <style>\n        body {\n            --background: #212529;\n            --on-background: white;\n            --surface: #2d3136;\n            --on-surface: white;\n            --primary: var(--nr-dashboard-widgetColor);\n            --on-primary: white;\n            --secondary: var(--nr-dashboard-groupTextColor);\n            --accent: red;\n            --radius-s: 8px;\n            --font-weight-m: 300;\n            --font-weight-m: 500;\n            --font-weight-l: 700;\n            --space-s: 8px;\n            --space-m: 16px;\n            --space-l: 32px;\n        }\n\n        body.nr-dashboard-theme {\n            background-color: var(--background);\n            font-family: 'Montserrat', sans-serif;\n        }\n\n        .nr-dashboard-theme ui-card-panel {\n            background-color: var(--background);\n            border: 0;\n        }\n\n        .nr-dashboard-theme .nr-dashboard-button .md-button {\n            background-color: var(--primary);\n            border-radius: var(--radius-s);\n            padding: 8px !important;\n            line-height: inherit;\n            font-weight: var(--font-weight-l);\n            color: var(--on-primary);\n        }\n\n        .nr-dashboard-theme [ui-card-size=\"2x2\"].nr-dashboard-button .md-button {\n            display: flex;\n            flex-direction: column;\n            justify-content: center;\n            align-items: center;\n            white-space: pre-line;\n        }\n\n        .nr-dashboard-theme .nr-dashboard-button .md-button ui-icon {\n            margin-bottom: 8px;\n        }\n\n        .nr-dashboard-theme .nr-dashboard-button .md-button:hover {\n            background-color: var(--secondary);\n        }\n\n        body.nr-dashboard-theme md-content md-card {\n            background-color: var(--surface);\n        }\n\n        md-card.md-default-theme,\n        md-card {\n            border-radius: var(--radius-s);\n        }\n\n        .nr-dashboard-theme .nr-dashboard-gauge-titlel {\n            font-weight: var(--font-weight-l) !important;\n        }\n\n        .nr-dashboard-theme ui-card-panel p.nr-dashboard-cardtitle {\n            font-weight: var(--font-weight-l);\n            text-transform: capitalize;\n            color: var(--on-background);\n        }\n\n        .nr-dashboard-cardpanel>p {\n            margin-left: 0;\n            padding-left: 16px;\n        }\n\n        body.nr-dashboard-theme md-toolbar {\n            background-color: var(--surface);\n        }\n\n        .md-default-theme .md-datepicker-calendar,\n        .md-datepicker-calendar,\n        .md-default-theme .md-calendar,\n        .md-calendar {\n            background-color: var(--surface);\n            color: var(--on-surface);\n        }\n\n        .md-default-theme .md-datepicker-calendar-pane,\n        .md-datepicker-calendar-pane {\n            border: 0;\n        }\n\n        .md-default-theme .md-calendar-month-label md-icon,\n        .md-calendar-month-label md-icon,\n        .md-default-theme .md-datepicker-input,\n        .md-datepicker-input {\n            color: var(--on-surface);\n        }\n\n        body.nr-dashboard-theme md-content md-card {\n            color: var(--on-surface);\n        }\n\n        .nr-dashboard-theme .nr-dashboard-numeric .value {\n            background-color: var(--surface);\n            color: var(--on-surface);\n        }\n\n        .nr-dashboard-theme .nr-dashboard-dropdown md-select .md-select-value,\n        .nr-dashboard-theme .nr-dashboard-dropdown md-select .md-select-value.md-select-placeholder {\n            color: var(--on-surface);\n            border-color: var(--on-surface);\n        }\n\n        .nr-dashboard-theme .nr-dashboard-dropdown .md-select-icon {\n            color: var(--on-surface);\n        }\n\n        .nr-dashboard-theme .nr-dashboard-date-picker md-input-container .md-input {\n            color: var(--on-surface);\n            border-color: var(--on-surface);\n        }\n\n        .nr-dashboard-theme .nr-dashboard-date-picker .md-datepicker-triangle-button .md-datepicker-expand-triangle {\n            border-top-color: var(--on-surface);\n        }\n\n        body.nr-dashboard-theme md-sidenav {\n            background-color: var(--surface);\n        }\n\n        md-list-item._md-button-wrap>div.md-button:first-child,\n        md-list-item .md-list-item-inner {\n            background-color: var(--surface);\n        }\n\n        /* Thêm mã CSS cho hộp trong suốt */\n        .transparent-box {\n            background-color: rgba(255, 0, 0, 0.5);\n            /* Màu trong suốt với độ mờ */\n            width: 200px;\n            height: 200px;\n            border-radius: 10px;\n            border: 2px solid #fff;\n            /* Các thuộc tính khác cho hộp trong suốt */\n        }\n    </style>\n</head>\n\n<body class=\"nr-dashboard-theme\">\n    <div class=\"transparent-box\"></div>\n    <!-- Các phần HTML khác của bạn -->\n</body>\n\n</html>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": false,
+        "templateScope": "global",
+        "className": "",
+        "x": 1100,
+        "y": 180,
+        "wires": [
+            []
+        ],
+        "icon": "node-red-dashboard/ui_colour_picker.png",
+        "info": "# Modern Dark Theme for node-red-dashboard\n\nInspired by Victor Lucachi with his [Node Red Dashboard Concept](https://dribbble.com/shots/10356530-Node-Red-Dashboard-Concept) on Dribbble. Thank you for your work.\n\n## Customize\n\n1. Go on dashboard customisation tab (At the right of Debug Console).\n2. Select the style Dark.\n3. Pick the color you want. Example #66B5F8`\n\n## Buttons\n\nUse 2x2` size for buttons with icon and text on the screenshot"
+    },
+    {
+        "id": "694bb7def8e41702",
+        "type": "http request",
+        "z": "e0683159ab6f5efc",
+        "name": "Yêu cầu lịch sử từ ThingSpeak",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "https://api.thingspeak.com/channels/2243219/fields/2.json?api_key=8Y90PLCPMQNB1AOK",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 350,
+        "y": 1500,
+        "wires": [
+            [
+                "90e3fac6b04c3121"
+            ]
+        ]
+    },
+    {
+        "id": "9872092d4b708c5c",
+        "type": "mqtt in",
+        "z": "e0683159ab6f5efc",
+        "name": "",
+        "topic": "nhom9/sensor",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "f63805fac32c6399",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 350,
+        "y": 600,
+        "wires": [
+            [
+                "cf32ee632189832f",
+                "c47bfadb52dc55c1"
+            ]
+        ]
+    },
+    {
+        "id": "9c54b4c790dff0ad",
+        "type": "inject",
+        "z": "e0683159ab6f5efc",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 120,
+        "y": 1540,
+        "wires": [
+            [
+                "694bb7def8e41702"
+            ]
+        ]
+    },
+    {
+        "id": "e5a654cab425456e",
+        "type": "debug",
+        "z": "e0683159ab6f5efc",
+        "name": "debug 14",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1120,
+        "y": 1480,
+        "wires": []
+    },
+    {
+        "id": "fab7e25128dadaa5",
+        "type": "ui_template",
+        "z": "e0683159ab6f5efc",
+        "group": "8f8a670857ab85c9",
+        "name": "",
+        "order": 0,
+        "width": "10",
+        "height": "7",
+        "format": "<table>\n    <tr>\n        <th>Thời gian</th>\n        <th>Trạng thái</th>\n    </tr>\n    <tr ng-repeat=\"data in msg.payload\">\n        <td>{{ data.timestamp }}</td>\n        <td>{{ data.value }}</td>\n    </tr>\n</table>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 1060,
+        "y": 1400,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "90e3fac6b04c3121",
+        "type": "function",
+        "z": "e0683159ab6f5efc",
+        "name": "Xử lý dữ liệu",
+        "func": "var rawData = JSON.parse(msg.payload);\nvar dataToDisplay = [];\n\nfor (var i = 0; i < rawData.feeds.length; i++) {\n    var feed = rawData.feeds[i];\n    var timestamp = new Date(feed.created_at);\n\n    // Cộng thêm 7 tiếng vào thời gian (7 * 60 * 60 * 1000 milliseconds)\n    timestamp.setTime(timestamp.getTime() + 7 * 60 * 60 * 1000);\n\n    var formattedTimestamp = timestamp.toISOString().replace('T', ' ').substr(0, 19);\n    var value = (parseFloat(feed.field2) === 1) ? \"Thành công\" : \"Thất bại\";\n    var data = {\n        timestamp: formattedTimestamp,\n        value: value\n    };\n    dataToDisplay.push(data);\n}\n\nmsg.payload = dataToDisplay;\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 750,
+        "y": 1440,
+        "wires": [
+            [
+                "fab7e25128dadaa5",
+                "e5a654cab425456e"
+            ]
+        ]
+    },
+    {
+        "id": "dbb2e388503cdbb6",
+        "type": "function",
+        "z": "e0683159ab6f5efc",
+        "name": "Xử lý dữ liệu",
+        "func": "var rawData = JSON.parse(msg.payload);\nvar dataToDisplay = [];\n\nfor (var i = 0; i < rawData.feeds.length; i++) {\n    var feed = rawData.feeds[i];\n    \n\n    // Kiểm tra và xử lý giá trị value\n    var value = feed.field3;\n    var data = {\n        value: value\n    };\n    dataToDisplay.push(data);\n}\n\nmsg.payload = dataToDisplay;\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 750,
+        "y": 1660,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "b57509fa93ebb4ac",
+        "type": "http request",
+        "z": "e0683159ab6f5efc",
+        "name": "Yêu cầu lịch sử từ ThingSpeak",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "https://api.thingspeak.com/channels/2243219/fields/3.json?api_key=8Y90PLCPMQNB1AOK",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 470,
+        "y": 1920,
+        "wires": [
+            [
+                "dbb2e388503cdbb6"
+            ]
+        ]
+    },
+    {
+        "id": "dbdee21b66dd3caa",
+        "type": "debug",
+        "z": "e0683159ab6f5efc",
+        "name": "debug 15",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1100,
+        "y": 1680,
+        "wires": []
+    },
+    {
+        "id": "8033dac0f55458b5",
+        "type": "inject",
+        "z": "e0683159ab6f5efc",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 100,
+        "y": 1740,
+        "wires": [
+            [
+                "b57509fa93ebb4ac"
+            ]
+        ]
+    },
+    {
+        "id": "ebdead8f9b55521d",
+        "type": "ui_group",
+        "name": "Control",
+        "tab": "0db676ac4b9d065b",
+        "order": 1,
+        "disp": true,
+        "width": "8",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "bc3cd7053667dade",
+        "type": "ui_group",
+        "name": "Status",
+        "tab": "0db676ac4b9d065b",
+        "order": 3,
+        "disp": true,
+        "width": "8",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "f3ad3a6e3aeb3ac4",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "broker.hivemq.com",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "f63805fac32c6399",
+        "type": "mqtt-broker",
+        "name": "Server",
+        "broker": "broker.hivemq.com",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "f0f8157ed2a59617",
+        "type": "ui_group",
+        "name": "Login",
+        "tab": "aef5c20f.42eab8",
+        "order": 2,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "2a745e6b.07df92",
+        "type": "ui_group",
+        "name": "Default",
+        "tab": "0db676ac4b9d065b",
+        "order": 5,
+        "disp": true,
+        "width": "6",
+        "collapse": true,
+        "className": ""
+    },
+    {
+        "id": "8f8a670857ab85c9",
+        "type": "ui_group",
+        "name": "History",
+        "tab": "0db676ac4b9d065b",
+        "order": 2,
+        "disp": true,
+        "width": "10",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "0db676ac4b9d065b",
+        "type": "ui_tab",
+        "name": "Smart door",
+        "icon": "dashboard",
+        "order": 5,
+        "disabled": false,
+        "hidden": true
+    },
+    {
+        "id": "aef5c20f.42eab8",
+        "type": "ui_tab",
+        "name": "LoginPage",
+        "icon": "dashboard",
+        "order": 1,
+        "disabled": false,
+        "hidden": false
+    }
+]
